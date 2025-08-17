@@ -174,45 +174,114 @@ const Projects = () => {
                     style={{ transformStyle: "preserve-3d" }}
                   >
                     {/* Project Image */}
-                    <div className="relative overflow-hidden">
+                    <div className="relative overflow-hidden group/image">
                       <motion.img
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110"
+                        className="w-full h-48 object-cover"
+                        whileHover={{ 
+                          scale: 1.15,
+                          rotate: 1
+                        }}
+                        transition={{ 
+                          duration: 0.6,
+                          ease: "easeOut"
+                        }}
                       />
                       
-                      {/* Overlay with Actions */}
+                      {/* Animated Overlay with Actions */}
                       <motion.div
-                        initial={{ opacity: 0 }}
-                        whileHover={{ opacity: 1 }}
-                        className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-center justify-center gap-4"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileHover={{ 
+                          opacity: 1, 
+                          y: 0,
+                          background: "linear-gradient(45deg, rgba(0,0,0,0.9) 0%, rgba(6,182,212,0.3) 50%, rgba(147,51,234,0.3) 100%)"
+                        }}
+                        className="absolute inset-0 flex items-center justify-center gap-6"
+                        transition={{ duration: 0.3, ease: "easeOut" }}
                       >
                         <motion.a
                           href={project.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-3 bg-gray-900/80 backdrop-blur-sm rounded-full text-white hover:bg-cyan-500 transition-colors duration-300"
-                          whileHover={{ scale: 1.1 }}
+                          className="relative p-4 bg-gray-900/90 backdrop-blur-sm rounded-full text-white border border-gray-600/50 overflow-hidden"
+                          whileHover={{ 
+                            scale: 1.2,
+                            rotate: 360,
+                            borderColor: "rgba(6, 182, 212, 0.8)",
+                            boxShadow: "0 0 20px rgba(6, 182, 212, 0.5)"
+                          }}
                           whileTap={{ scale: 0.9 }}
+                          transition={{ duration: 0.3 }}
                         >
-                          <Github className="w-5 h-5" />
+                          <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 opacity-0"
+                            whileHover={{ opacity: 1 }}
+                          />
+                          <Github className="w-5 h-5 relative z-10" />
                         </motion.a>
+                        
                         <motion.a
                           href={project.demo}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-3 bg-gray-900/80 backdrop-blur-sm rounded-full text-white hover:bg-purple-500 transition-colors duration-300"
-                          whileHover={{ scale: 1.1 }}
+                          className="relative p-4 bg-gray-900/90 backdrop-blur-sm rounded-full text-white border border-gray-600/50 overflow-hidden"
+                          whileHover={{ 
+                            scale: 1.2,
+                            rotate: -360,
+                            borderColor: "rgba(147, 51, 234, 0.8)",
+                            boxShadow: "0 0 20px rgba(147, 51, 234, 0.5)"
+                          }}
                           whileTap={{ scale: 0.9 }}
+                          transition={{ duration: 0.3 }}
                         >
-                          <ExternalLink className="w-5 h-5" />
+                          <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0"
+                            whileHover={{ opacity: 1 }}
+                          />
+                          <ExternalLink className="w-5 h-5 relative z-10" />
                         </motion.a>
                       </motion.div>
 
-                      {/* Glow Effect */}
+                      {/* Animated Border Sweep */}
                       <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                        className="absolute inset-0 border-2 border-transparent"
+                        whileHover={{
+                          borderImage: "linear-gradient(45deg, #06b6d4, #8b5cf6, #ec4899) 1",
+                        }}
+                        style={{
+                          background: "linear-gradient(45deg, #06b6d4, #8b5cf6, #ec4899) border-box",
+                          mask: "linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)",
+                          maskComposite: "xor"
+                        }}
                       />
+
+                      {/* Particle Effects on Hover */}
+                      {hoveredProject === project.id && (
+                        <div className="absolute inset-0 pointer-events-none">
+                          {[...Array(8)].map((_, i) => (
+                            <motion.div
+                              key={i}
+                              className="absolute w-2 h-2 bg-cyan-400 rounded-full"
+                              style={{
+                                left: `${20 + (i * 10)}%`,
+                                top: `${20 + (i * 8)}%`,
+                              }}
+                              animate={{
+                                y: [0, -20, 0],
+                                opacity: [0, 1, 0],
+                                scale: [0, 1, 0]
+                              }}
+                              transition={{
+                                duration: 1.5,
+                                repeat: Infinity,
+                                delay: i * 0.2,
+                                ease: "easeInOut"
+                              }}
+                            />
+                          ))}
+                        </div>
+                      )}
                     </div>
 
                     {/* Project Info */}
