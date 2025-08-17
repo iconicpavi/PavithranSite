@@ -285,49 +285,99 @@ const Projects = () => {
                     </div>
 
                     {/* Project Info */}
-                    <div className="p-6">
+                    <motion.div 
+                      className="p-6"
+                      whileHover={{ y: -2 }}
+                      transition={{ duration: 0.2 }}
+                    >
                       <div className="flex items-start justify-between mb-3">
-                        <h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors duration-300">
+                        <motion.h3 
+                          className="text-xl font-bold text-white transition-colors duration-300"
+                          whileHover={{ 
+                            color: "#06b6d4",
+                            scale: 1.02
+                          }}
+                        >
                           {project.title}
-                        </h3>
-                        <span className={`px-2 py-1 text-xs rounded-full ${
-                          project.category === 'Web' ? 'bg-blue-500/20 text-blue-300' :
-                          project.category === 'Mobile' ? 'bg-green-500/20 text-green-300' :
-                          'bg-purple-500/20 text-purple-300'
-                        }`}>
+                        </motion.h3>
+                        <motion.span 
+                          className={`px-3 py-1 text-xs rounded-full font-medium ${
+                            project.category === 'Web' ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30' :
+                            project.category === 'Mobile' ? 'bg-green-500/20 text-green-300 border border-green-500/30' :
+                            'bg-purple-500/20 text-purple-300 border border-purple-500/30'
+                          }`}
+                          whileHover={{ scale: 1.1, y: -2 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
                           {project.category}
-                        </span>
+                        </motion.span>
                       </div>
                       
-                      <p className="text-gray-400 text-sm leading-relaxed mb-4">
+                      <motion.p 
+                        className="text-gray-400 text-sm leading-relaxed mb-4"
+                        initial={{ opacity: 0.7 }}
+                        whileHover={{ opacity: 1 }}
+                      >
                         {project.description}
-                      </p>
+                      </motion.p>
                       
                       {/* Tech Stack */}
                       <div className="flex flex-wrap gap-2">
                         {project.technologies.map((tech, techIndex) => (
                           <motion.span
                             key={techIndex}
-                            initial={{ opacity: 0, scale: 0 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: techIndex * 0.1 }}
-                            className="px-2 py-1 text-xs bg-gradient-to-r from-gray-700 to-gray-800 text-gray-300 rounded border border-gray-600/50 hover:border-cyan-500/50 transition-colors duration-300"
+                            initial={{ opacity: 0, scale: 0, y: 10 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            whileHover={{ 
+                              scale: 1.1, 
+                              y: -2,
+                              backgroundColor: "rgba(6, 182, 212, 0.2)",
+                              borderColor: "rgba(6, 182, 212, 0.5)",
+                              color: "#06b6d4"
+                            }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{ 
+                              delay: techIndex * 0.05,
+                              duration: 0.2 
+                            }}
+                            className="px-3 py-1 text-xs bg-gradient-to-r from-gray-700/50 to-gray-800/50 text-gray-300 rounded-full border border-gray-600/50 cursor-pointer transition-all duration-200"
                           >
                             {tech}
                           </motion.span>
                         ))}
                       </div>
-                    </div>
+                    </motion.div>
 
-                    {/* Animated Border */}
+                    {/* Animated Card Border */}
                     <motion.div
-                      className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                      style={{ 
-                        background: 'linear-gradient(45deg, #06b6d4, #8b5cf6, #ec4899)',
-                        mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-                        maskComposite: 'xor',
-                        padding: '2px'
+                      className="absolute inset-0 rounded-xl opacity-0 pointer-events-none"
+                      whileHover={{ 
+                        opacity: 1,
+                        background: "linear-gradient(45deg, transparent, rgba(6,182,212,0.1), transparent, rgba(147,51,234,0.1), transparent)",
+                        backgroundSize: "400% 400%"
                       }}
+                      animate={{
+                        backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                      }}
+                      transition={{
+                        backgroundPosition: {
+                          duration: 3,
+                          repeat: Infinity,
+                          ease: "linear"
+                        }
+                      }}
+                      style={{
+                        mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                        maskComposite: "xor",
+                        padding: "2px"
+                      }}
+                    />
+
+                    {/* Hover Glow Effect */}
+                    <motion.div
+                      className="absolute -inset-1 rounded-xl bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-pink-500/20 opacity-0 blur-xl pointer-events-none"
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
                     />
                   </motion.div>
                 </motion.div>
