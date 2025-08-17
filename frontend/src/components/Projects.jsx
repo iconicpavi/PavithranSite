@@ -391,17 +391,63 @@ const Projects = () => {
             className="text-center mt-16"
           >
             <motion.button
-              className="group relative px-8 py-4 bg-gradient-to-r from-gray-800 to-gray-900 text-white font-semibold rounded-full border border-gray-600 overflow-hidden transition-all duration-300 hover:border-cyan-500"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="group relative px-10 py-5 bg-gradient-to-r from-gray-800/50 to-gray-900/50 text-white font-semibold rounded-full border border-gray-600/50 overflow-hidden backdrop-blur-sm"
+              whileHover={{ 
+                scale: 1.05,
+                borderColor: "rgba(6, 182, 212, 0.8)",
+                boxShadow: "0 20px 40px rgba(0, 0, 0, 0.3), 0 0 40px rgba(6, 182, 212, 0.2)"
+              }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
+              {/* Animated Background */}
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-pink-500/10 opacity-0"
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
               />
-              <span className="relative z-10 flex items-center gap-2">
-                <Github className="w-5 h-5" />
+              
+              {/* Moving Background Effect */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent opacity-0"
+                whileHover={{ 
+                  opacity: 1,
+                  x: ["100%", "-100%"]
+                }}
+                transition={{
+                  x: { duration: 1.5, ease: "easeInOut" },
+                  opacity: { duration: 0.3 }
+                }}
+              />
+              
+              <motion.span 
+                className="relative z-10 flex items-center gap-3"
+                whileHover={{ x: 5 }}
+              >
+                <motion.div
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Github className="w-6 h-6" />
+                </motion.div>
                 View All Projects on GitHub
-              </span>
+              </motion.span>
+
+              {/* Glowing Border */}
+              <motion.div
+                className="absolute inset-0 rounded-full border-2 border-transparent opacity-0"
+                whileHover={{ 
+                  opacity: 1,
+                  borderColor: "rgba(6, 182, 212, 0.5)"
+                }}
+                animate={{
+                  rotate: 360
+                }}
+                transition={{
+                  rotate: { duration: 8, repeat: Infinity, ease: "linear" },
+                  opacity: { duration: 0.3 }
+                }}
+              />
             </motion.button>
           </motion.div>
         </motion.div>
