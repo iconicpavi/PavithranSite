@@ -140,18 +140,38 @@ const Projects = () => {
                   {/* Featured Badge */}
                   {project.featured && (
                     <motion.div
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="absolute -top-3 -right-3 z-20 bg-gradient-to-r from-yellow-400 to-orange-500 text-black text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1"
+                      initial={{ opacity: 0, scale: 0, rotate: -10 }}
+                      animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      className="absolute -top-3 -right-3 z-20 bg-gradient-to-r from-yellow-400 to-orange-500 text-black text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1 shadow-lg shadow-yellow-500/50"
                     >
-                      <Star className="w-3 h-3" />
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                      >
+                        <Star className="w-3 h-3 fill-current" />
+                      </motion.div>
                       Featured
                     </motion.div>
                   )}
 
                   <motion.div
-                    className="relative overflow-hidden rounded-xl bg-gradient-to-b from-gray-800/30 to-gray-900/30 border border-gray-700/30 hover:border-cyan-500/50 transition-all duration-500"
-                    whileHover={{ y: -10 }}
+                    className="relative overflow-hidden rounded-xl bg-gradient-to-b from-gray-800/30 to-gray-900/30 border border-gray-700/30 backdrop-blur-sm"
+                    whileHover={{ 
+                      y: -15,
+                      rotateX: 5,
+                      scale: 1.02,
+                      borderColor: "rgba(6, 182, 212, 0.5)",
+                      boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 30px rgba(6, 182, 212, 0.3)"
+                    }}
+                    whileTap={{ scale: 0.98, y: -5 }}
+                    transition={{ 
+                      type: "spring", 
+                      stiffness: 300, 
+                      damping: 20,
+                      duration: 0.3
+                    }}
+                    style={{ transformStyle: "preserve-3d" }}
                   >
                     {/* Project Image */}
                     <div className="relative overflow-hidden">
